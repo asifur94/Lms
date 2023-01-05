@@ -9,8 +9,8 @@
 </tr>
 @foreach ($leads as $lead )
 <tr>
-    <td class="border px-4 py-2 text-center">{{ $lead->name }}</td>
-    <td class="border px-4 py-2 text-center">{{ $lead->email }}</td>
+    <td class="border px-4 py-2 ">{{ $lead->name }}</td>
+    <td class="border px-4 py-2 ">{{ $lead->email }}</td>
     <td class="border px-4 py-2 text-center">{{ $lead->phone }}</td>
     <td class="border px-4 py-2 text-center">{{date('F j,Y', strtotime($lead->created_at))  }}</td>
     <td class="border px-4 py-2 text-center">

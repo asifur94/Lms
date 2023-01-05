@@ -15,13 +15,12 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $check = $user->hasPermissionTo('lead-management');
 
-        if(!$check){
-            flash()->addWarning('You are not authorized to access this page');
-            return redirect()->route('dashboard');
-        }
+
+
+
+        //permission check
+        permission_check('lead-management');
         return view('lead.index');
     }
 
@@ -65,7 +64,9 @@ class LeadController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('lead.edit', [
+            'lead_id' =>$id
+        ]);
     }
 
     /**

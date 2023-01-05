@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
 
             $table->text('description');
-            $table->unsignedBigInteger('curriculum_id');
-            $table->unsignedBigInteger('exam_id');
-            $table->unsignedBigInteger('User_id');
-            $table->unsignedBigInteger('lead_id');
+            $table->unsignedBigInteger('curriculum_id')->nullable();
+            $table->unsignedBigInteger('exam_id')->nullable();
+            $table->unsignedBigInteger('User_id')->nullable();
+            $table->unsignedBigInteger('lead_id')->nullable();
             $table->timestamps();
 
 
