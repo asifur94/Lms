@@ -50,6 +50,13 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+
+                            @can('user-management')
+                            <x-dropdown-link :href="route('user.index')">
+                                {{ __('Users') }}
+                                @endcan
+                            </x-dropdown-link>
+
                         </x-dropdown-link>
 
                         <!-- Authentication -->
