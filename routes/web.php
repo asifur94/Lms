@@ -4,6 +4,7 @@ use App\Http\Controllers\LeadController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdmissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('lead' , LeadController::class);
     Route::resource('user' , UserController::class);
     Route::resource('role' , RoleController::class);
+    Route::get('/admission', [AdmissionController::class, 'admission'])->name('admission');
 });
 
 require __DIR__.'/auth.php';
