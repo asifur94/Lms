@@ -18,7 +18,7 @@ class UserCreate extends Component
 
     protected $rules = [
         'name' => 'required',
-        'email' => 'required|email|unique:user,email',
+        'email' => 'required|email|unique:users,email',
         'password' => 'required|min:8',
         'role' => 'required',
     ];
