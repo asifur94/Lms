@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Lead;
 use App\Models\User;
 use App\Models\InvoiceItem;
+use App\Models\Payment;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -61,6 +62,17 @@ public function admit(){
     'due_date' => now()->addDays(7),
     'user_id' => $user->id,
    ]);
+
+
+   $this->selectedCourse->students()->attach($user->id);
+
+
+  if(!empty($this->payment)){
+    Payment::create([
+        'amount' => $this->payment,
+        'invoice_id' => $invoice->id,
+    ]);
+  }
 
   $invoice = InvoiceItem::create([
     'name' => 'course:' . $this->selectedCourse->name,
