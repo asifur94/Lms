@@ -138,7 +138,7 @@ class DatabaseSeeder extends Seeder
 
         $course = Course::create([
             'name' => 'Laravel',
-            'desription' => 'Laravel is a web application framework with expressive, elegant syntax. A web framework provides a structure and starting point for creating your application, allowing you to focus on creating something amazing while we sweat the details.',
+            'description' => 'Laravel is a web application framework with expressive, elegant syntax. A web framework provides a structure and starting point for creating your application, allowing you to focus on creating something amazing while we sweat the details.',
             'image' => 'https://laravel.com/img/logomark.min.svg',
             'user_id' => $teacher->id,
             'price' => 500,

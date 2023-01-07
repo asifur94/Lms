@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
-{
+{ protected $fillable = [
+    'name',
+    'description',
+    'price',
+    'user_id'
+];
     use HasFactory;
     public function curriculums(){
         return $this->hasMany(Curriculum::class);
