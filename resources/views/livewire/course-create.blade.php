@@ -11,6 +11,16 @@
 
     <div class="mb-6">
         @include('components.form-field', [
+            'name' => 'image',
+            'label' => 'Image',
+            'type' => 'text',
+            'placeholder' => 'Image Url',
+            'required' => 'required',
+        ])
+    </div>
+
+    <div class="mb-6">
+        @include('components.form-field', [
             'name' => 'description',
             'label' => 'Description',
             'type' => 'textarea',

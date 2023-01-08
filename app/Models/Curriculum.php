@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Curriculum extends Model
 {
+    protected $fillable = [
+        'name',
+        'image',
+        'course_id',
+        'class_date',
+        'class_day',
+        'class_time'
+    ];
+
     protected $table = 'curriculums';
     use HasFactory;
 

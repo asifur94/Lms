@@ -10,14 +10,21 @@ class CourseController extends Controller
         return view('course.index');
     }
 
-    public function edit($id)
+    public function edit()
     {
-        return view('course.edit',[
-            'course_id' =>$id,
-        ]);
+        return view('course.edit');
     }
 
     public function create(){
         return view('course.create');
+
+
     }
+
+    public function show(){
+        return view('course.view');
+    }
+
+
+
 }

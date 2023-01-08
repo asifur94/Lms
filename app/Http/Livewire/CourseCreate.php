@@ -16,6 +16,7 @@ class CourseCreate extends Component
 
     public $name;
     public $description;
+    public $image;
     public $price;
     public $selectedDays = [];
     public $time;
@@ -34,6 +35,7 @@ class CourseCreate extends Component
     protected $rules = [
         'name' => 'required|unique:courses,name',
         'description' => 'required',
+        'image' => 'required',
         'price' => 'required',
     ];
 
@@ -43,20 +45,21 @@ class CourseCreate extends Component
         $course = Course::create([
             'name' => $this->name,
             'description' => $this->description,
+            'image' => $this->image,
             'price' => $this->price,
             'user_id' => Auth::user()->id
         ]);
 
         $course_id = $course->id;
         foreach($this->selectedDays as $day) {
-            // check how many sunday available
+
             $i = 1;
             $start_date = new DateTime(Carbon::now());
             $end_date =   new DateTime($this->end_date);
             $interval =  new DateInterval('P1D');
             $date_range = new DatePeriod($start_date, $interval, $end_date);
             foreach ($date_range as $date) {
-                if($date->format("l") === "Sunday"){ // Need to make Selected day Dynamic
+                if($date->format("l") === "Sunday"){
                     $curriculum = Curriculum::create([
                         'name' => $this->name.' '.$i++,
                         'course_id' => $course_id,

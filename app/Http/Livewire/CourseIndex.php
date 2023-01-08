@@ -9,13 +9,15 @@ class CourseIndex extends Component
 {
     public function render()
     {
+        $courses = Course::paginate(10);
+        return view('livewire.course-index',['courses'=>$courses]);
+    }
 
-        $course = Course::paginate(10);
+    public function courseDelete($id){
+        $course = Course::findOrFail($id);
 
-        return view('livewire.course-index',[
-            'courses' =>$course,
-        ]);
+        $course->delete();
 
-
+        flash()->addSuccess('Course Delete Successfully!');
     }
 }

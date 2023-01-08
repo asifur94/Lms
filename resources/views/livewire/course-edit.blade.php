@@ -1,10 +1,19 @@
-<form wire:submit.prevent="formSubmit">
+<form wire:submit.prevent="courseEdit">
     <div class="mb-6">
         @include('components.form-field', [
             'name' => 'name',
             'label' => 'Name',
             'type' => 'text',
             'placeholder' => 'Enter name',
+            'required' => 'required',
+        ])
+    </div>
+    <div class="mb-6">
+        @include('components.form-field', [
+            'name' => 'image',
+            'label' => 'Image',
+            'type' => 'text',
+            'placeholder' => 'Image Url',
             'required' => 'required',
         ])
     </div>
@@ -30,17 +39,17 @@
     </div>
 
     <div class="flex mb-6 items-center">
-        <div class="w-full mr-4">
+        {{-- <div class="w-full mr-4">
             <label class="lms-label" for="days">Days</label>
             <div class="flex flex-wrap -mx-4">
-                {{-- @foreach ($days as $day)
+                @foreach ($days as $day)
                     <div class="min-w-max flex items-center px-4">
                         <input wire:model.lazy="selectedDays" class="mr-2" type="checkbox" value="{{ $day }}"
                             id="{{ $day }}"> <label for="{{ $day }}">{{ ucfirst($day) }}</label>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
-        </div>
+        </div> --}}
         <div class="min-w-max mr-4">
             <div class="mb-6">
                 @include('components.form-field', [
