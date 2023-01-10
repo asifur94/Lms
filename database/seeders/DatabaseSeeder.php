@@ -146,7 +146,7 @@ class DatabaseSeeder extends Seeder
 
 
 
-        Curriculum::factory()->count(10)->create();
+        //Curriculum::factory()->count(10)->create();
 
 
     }
