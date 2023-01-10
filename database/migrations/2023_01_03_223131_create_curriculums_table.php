@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->dateTime('end_date');
+            $table->dateTime('class_date');
             $table->unsignedBigInteger('course_id');
            $table->timestamps();
 
