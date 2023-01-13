@@ -134,16 +134,23 @@ class DatabaseSeeder extends Seeder
         Lead::factory()->count(100)->create();
 
 
-        //create course
+        // //create course
 
+        // $course = Course::create([
+        //     'name' => 'Laravel',
+        //     'description' => 'Laravel is a web application framework with expressive, elegant syntax. A web framework provides a structure and starting point for creating your application, allowing you to focus on creating something amazing while we sweat the details.',
+        //     'image' => 'https://laravel.com/img/logomark.min.svg',
+        //     'user_id' => $teacher->id,
+        //     'price' => 500,
+        // ]);
         $course = Course::create([
             'name' => 'Laravel',
-            'description' => 'Laravel is a web application framework with expressive, elegant syntax. A web framework provides a structure and starting point for creating your application, allowing you to focus on creating something amazing while we sweat the details.',
+            'slug' => 'laravel',
+            'description' => 'Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.',
             'image' => 'https://laravel.com/img/logomark.min.svg',
             'user_id' => $teacher->id,
-            'price' => 500,
+            'price' => 500
         ]);
-
 
 
         //Curriculum::factory()->count(10)->create();

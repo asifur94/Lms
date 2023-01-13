@@ -11,15 +11,29 @@ return new class extends Migration
      *
      * @return void
      */
+    // public function up()
+    // {
+    //     Schema::create('attendances', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->unsignedBigInteger('curriculum_id');
+    //         $table->unsignedBigInteger('User_id');
+    //         $table->timestamps();
+
+    //        $table->foreign('curriculum_id')->references('id')->on('curriculums')->onDelete('cascade');
+    //         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+    //     });
+    // }
     public function up()
     {
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('curriculum_id');
-            $table->unsignedBigInteger('User_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-           $table->foreign('curriculum_id')->references('id')->on('curriculums')->onDelete('cascade');
+            $table->unique(['curriculum_id', 'user_id']);
+
+            $table->foreign('curriculum_id')->references('id')->on('curriculums')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

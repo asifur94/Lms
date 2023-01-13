@@ -8,58 +8,114 @@ use Livewire\Component;
 
 class LeadEdit extends Component
 {
-    public $lead_id;
-    public $name;
-    public $email;
-    public $phone;
-    public $note;
+//     public $lead_id;
+//     public $name;
+//     public $email;
+//     public $phone;
+//     public $note;
 
-public function mount(){
+// public function mount(){
+//     $lead = Lead::findOrFail($this->lead_id);
+//         $this->lead_id = $lead->id;
+//         $this->name = $lead->name;
+//         $this->email = $lead->email;
+//         $this->phone = $lead->phone;
+// }
+
+
+//     public function render()
+//     {
+//         $lead = Lead::findOrFail($this->lead_id);
+//         return view('livewire.lead-edit', [
+//             'notes' =>$lead->notes,
+//         ]);
+//     }
+
+
+//     protected $rules = [
+//         'email' => 'email',
+//         'phone' => 'required',
+//     ];
+
+//     public function submitForm(){
+//         sleep(2);
+
+//         $lead = Lead::findOrFail($this->lead_id);
+
+//         $this->validate();
+
+//         $lead->name = $this->name;
+//         $lead->email = $this->email;
+//         $lead->phone = $this->phone;
+//         $lead->save();
+
+
+//         flash()->addSuccess('Lead Deleted Successfully');
+//     }
+//     public function addNote(){
+//         $note = new Note() ;
+//         $note->description = $this->note;
+//         $note->lead_id = $this->lead_id;
+//         $note->save();
+
+
+
+//         flash()->addSuccess('Note added Successfully');
+//     }
+public $lead_id;
+public $name;
+public $email;
+public $phone;
+
+public $note;
+
+public function mount() {
     $lead = Lead::findOrFail($this->lead_id);
-        $this->lead_id = $lead->id;
-        $this->name = $lead->name;
-        $this->email = $lead->email;
-        $this->phone = $lead->phone;
+    $this->lead_id = $lead->id;
+    $this->name = $lead->name;
+    $this->email = $lead->email;
+    $this->phone = $lead->phone;
 }
 
+public function render()
+{
+    $lead = Lead::findOrFail($this->lead_id);
 
-    public function render()
-    {
-        $lead = Lead::findOrFail($this->lead_id);
-        return view('livewire.lead-edit', [
-            'notes' =>$lead->notes,
-        ]);
-    }
+    return view('livewire.lead-edit', [
+        'notes' => $lead->notes
+    ]);
+}
 
+protected $rules = [
+    'email' => 'email',
+    'phone' => 'required',
+];
 
-    protected $rules = [
-        'email' => 'email',
-        'phone' => 'required',
-    ];
+public function submitForm() {
+    sleep(5);
 
-    public function submitForm(){
-        sleep(2);
+    $lead = Lead::findOrFail($this->lead_id);
 
-        $lead = Lead::findOrFail($this->lead_id);
+    $this->validate();
 
-        $this->validate();
+    $lead->name = $this->name;
+    $lead->email = $this->email;
+    $lead->phone = $this->phone;
+    $lead->save();
 
-        $lead->name = $this->name;
-        $lead->email = $this->email;
-        $lead->phone = $this->phone;
-        $lead->save();
+    flash()->addSuccess('Lead updated successfully');
+}
 
+public function addNote() {
+    $lead = Lead::findOrFail($this->lead_id);
+    $note = new Note();
+    $note->description = $this->note;
+    $note->save();
 
-        flash()->addSuccess('Lead Deleted Successfully');
-    }
-    public function addNote(){
-        $note = new Note() ;
-        $note->description = $this->note;
-        $note->lead_id = $this->lead_id;
-        $note->save();
+    $lead->notes()->attach($note->id);
 
+    $this->note = '';
 
-
-        flash()->addSuccess('Note added Successfully');
-    }
+    flash()->addSuccess('Note added successfully');
+}
 }

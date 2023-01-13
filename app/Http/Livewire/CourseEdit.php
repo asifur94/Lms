@@ -2,89 +2,105 @@
 
 namespace App\Http\Livewire;
 
-
-use App\Models\Course;
-use App\Models\Curriculum;
-use Carbon\Carbon;
-use DateInterval;
-use DatePeriod;
 use DateTime;
-use Illuminate\Support\Facades\Auth;
+use DatePeriod;
+use DateInterval;
+use Carbon\Carbon;
+use App\Models\Course;
 use Livewire\Component;
-
+use App\Models\Curriculum;
 
 class CourseEdit extends Component
 {
-
     public $course_id;
     public $name;
-    public $image;
-    public $day;
     public $description;
     public $price;
     public $selectedDays = [];
     public $time;
+    public $end_date;
 
-
-    public function mount(){
-        $course = Course::findOrFail($this->course_id);
-
-
-       $this->name = $course->name;
-       $this->image = $course->image;
-       $this->price = $course->price;
-       $this->description = $course->description;
-
-    }
-    public function render()
-    {
-        return view('livewire.course-edit',['name'=>$this->name]);
-    }
-
-
-
-
-
-    protected $rules = [
-        'name' => 'required|unique:courses,name',
-        'description' => 'required',
-        'image' => 'required',
-        'price' => 'required',
+    public $days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
     ];
 
+    protected $rules = [
+        'name' => 'required',
+        'description' => 'required',
+        'price' => 'required',
+        'selectedDays' => 'required',
+        'time' => 'required'
+    ];
 
-    public function courseEdit() {
+    public function mount()
+    {
+        $course = Course::where('id', $this->course_id)->with('curriculumns')->first();
+
+        $this->name = $course->name;
+        $this->description = $course->description;
+        $this->price = $course->price;
+        if (!empty(count($course->curriculumns))) {
+            $this->time = $course->curriculumns[0]->class_time;
+            $this->end_date = $course->curriculumns[0]->end_date;
+
+            foreach ($course->curriculumns as $curriculumn) {
+                $this->selectedDays[] = $curriculumn->week_day;
+            }
+        }
+    }
+
+    public function render()
+    {
+        return view('livewire.course-edit');
+    }
+
+    public function courseUpdate()
+    {
         $this->validate();
-        $course = Course::findOrFail($this->course_id);
 
-        $course->name = $this->name;
-        $course->description = $this->description;
-        $course->price = $this->price;
-        $course->image = $this->image;
-        $course->save();
+        $course = Course::where('id', $this->course_id)->with('curriculumns')->first();
 
+        foreach ($course->curriculumns as $curriculumn) {
+            $course->curriculumns()->delete($course->id);
+        }
 
-//        $course_id = $course->id;
-//        foreach($this->selectedDays as $day) {
-//
-//            $i = 1;
-//            $start_date = new DateTime(Carbon::now());
-//            $end_date =   new DateTime($this->end_date);
-//            $interval =  new DateInterval('P1D');
-//            $date_range = new DatePeriod($start_date, $interval, $end_date);
-//            foreach ($date_range as $date) {
-//                if($date->format("l") === "Sunday"){
-//                    $curriculum = Curriculum::create([
-//                        'name' => $this->name.' '.$i++,
-//                        'course_id' => $course_id,
-//                    ]);
-//                }
-//            }
-//            $i++;
-//        }
+        $course->update([
+            'name' => $this->name,
+            'description' => $this->description,
+            'price' => $this->price,
+            'user_id' => auth()->user()->id
+        ]);
 
-        flash()->addSuccess('Course created successfully');
+        // check how many sunday available
+        $i = 1;
+        $start_date = new DateTime(Carbon::now());
+        $endDate =   new DateTime($this->end_date);
+        $interval =  new DateInterval('P1D');
+        $date_range = new DatePeriod($start_date, $interval, $endDate);
 
+        foreach ($date_range as $date) {
+            foreach ($this->selectedDays as $day) {
+                if ($date->format("l") === $day) {
+                    Curriculum::create([
+                        'name' => $this->name . ' #' . $i++,
+                        'week_day' => $day,
+                        'class_time' => $this->time,
+                        'end_date' => $this->end_date,
+                        'course_id' => $course->id,
+                    ]);
+                }
+            }
+        }
+        $i++;
 
+        flash()->addSuccess('Course updated successfully');
+
+        return redirect()->route('course.index');
     }
 }

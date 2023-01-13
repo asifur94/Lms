@@ -11,41 +11,66 @@ return new class extends Migration
      *
      * @return void
      */
+    // public function up()
+    // {
+    //     Schema::create('courses', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('name');
+    //         $table->longText('description');
+    //         $table->string('image');
+    //         $table->unsignedBigInteger ('user_id');
+    //         $table->float('price')->default(0);
+    //        $table->timestamps();
+
+
+    //        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+    //     });
+
+    //     Schema::create('photos', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->string('name');
+    //         $table->string('path');
+    //         $table->timestamps();
+    //     });
+
+    //     Schema::create('course_student', function (Blueprint $table) {
+    //         $table->id();
+    //         $table->unsignedBigInteger ('course_id');
+    //         $table->unsignedBigInteger ('user_id');
+    //        $table->timestamps();
+
+
+    //        $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+    //        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+    //     });
+    // }
+
     public function up()
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug');
             $table->longText('description');
-            $table->string('image');
-            $table->unsignedBigInteger ('user_id');
+            $table->string('image')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->float('price')->default(0);
-           $table->timestamps();
-
-
-           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        });
-
-        Schema::create('photos', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('path');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
+
 
         Schema::create('course_student', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger ('course_id');
-            $table->unsignedBigInteger ('user_id');
-           $table->timestamps();
+            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('user_id');
+            $table->timestamps();
 
-
-           $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
-           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
-
-
 
 
 

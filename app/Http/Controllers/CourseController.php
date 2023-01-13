@@ -22,8 +22,8 @@ class CourseController extends Controller
 
     }
 
-    public function show(){
-        return view('course.view');
+    public function show($id){
+        return view('course.view', ['id' => $id]);
     }
 
 
