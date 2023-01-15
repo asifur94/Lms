@@ -2,13 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeadController;
+
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admission', [AdmissionController::class, 'admission'])->name('admission');
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice-index');
     Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoice-show');
+
+    Route::resource('/question',QuestionController::class);
+    Route::resource('/quiz',QuizController::class);
+     Route::get('/quiz-show/{id}', [QuizController::class, 'quizShow'])->name('quiz-show');
+
+
 
     Route::resource('course' , CourseController::class);
     Route::resource('class', CurriculumController::class);
